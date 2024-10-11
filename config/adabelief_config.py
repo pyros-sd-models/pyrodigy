@@ -1,4 +1,31 @@
-# adabelief_config.py
+"""
+AdaBelief Configuration Module
+------------------------------
+
+This module defines configurations for the AdaBelief optimizer, which adapts the
+learning rate based on both the magnitude of the gradients and the variance in
+the gradients, making it particularly effective for non-convex optimization.
+
+The AdaBelief optimizer offers several configuration presets tailored to different
+use cases:
+
+Configurations:
+    - **low_memory**: Optimized for environments with limited memory resources.
+      This preset keeps memory usage low by avoiding advanced features like
+      rectification and AMS bound.
+
+    - **consumer**: Provides a balanced configuration suitable for general use cases.
+      Includes rectification, which can help improve convergence, but avoids
+      memory-intensive features like AMS bound.
+
+    - **high_memory**: Designed for high-memory environments where maximum performance
+      is prioritized. This configuration enables all available options, including AMS bound
+      and AdaNorm, which can improve convergence and stability.
+
+Functions:
+    - get_config(config_name): Retrieve the specified configuration dictionary.
+"""
+
 use_case_configs = {
     "low_memory": {
         "optimizer": "AdaBelief",
@@ -35,9 +62,3 @@ use_case_configs = {
         "r": 0.95,
     },
 }
-
-
-def get_config(config_name):
-    if config_name not in use_case_configs:
-        raise ValueError(f"Config '{config_name}' not found")
-    return use_case_configs[config_name]

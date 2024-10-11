@@ -25,6 +25,10 @@ ruff = "^0.6.9"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.poetry.group.docs.dependencies]
+sphinx = "*"
+sphinx-rtd-theme = "*"
+myst-parser = "*"
 
 [tool.ruff]
 line-length = 88

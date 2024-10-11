@@ -1,8 +1,6 @@
 
 # **A2Grad Optimizer Review**
 
----
-
 **Overview:**
 
 The optimizer you've provided is an implementation of the **A2Grad** algorithm, which stands for **Adaptive and Accelerated Gradient** method. It's like the optimizer that's had one too many espressos—aiming to speed up convergence while adapting to the terrain of your loss function. A2Grad combines adaptive learning rates with acceleration techniques, hoping to outpace its competitors in the race to the optimal solution. It's the optimizer equivalent of wearing both running shoes and a jetpack.
@@ -209,6 +207,7 @@ However, practical challenges like hyperparameter tuning, increased memory consu
        variant='uni'
    )
    ```
+
    *Explanation:*
    - Start with default `beta` and `lips` values.
    - Use the `'uni'` variant to keep memory consumption lower.
@@ -225,6 +224,7 @@ However, practical challenges like hyperparameter tuning, increased memory consu
        variant='inc'
    )
    ```
+
    *Explanation:*
    - Adjust `beta` and `lips` to smaller values to be more responsive.
    - Use the `'inc'` variant to benefit from incremental scaling.
@@ -241,6 +241,7 @@ However, practical challenges like hyperparameter tuning, increased memory consu
        variant='exp'
    )
    ```
+
    *Explanation:*
    - Lower `lips` to allow larger step sizes due to increased batch size.
    - Set `rho` to 0.9 for smoother adaptation in the `'exp'` variant.

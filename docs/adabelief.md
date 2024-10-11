@@ -1,4 +1,4 @@
-**Title: AdaBelief Optimizer Review**
+# **AdaBelief Optimizer Review**
 
 ---
 
@@ -209,6 +209,7 @@ However, the added complexity in hyperparameters and the need for careful tuning
        adanorm=False
    )
    ```
+
    *Start with a conservative learning rate and disable optional features to conserve resources.*
 
 2. **Consumer Environments (24GB VRAM) - Batch Size 4:**
@@ -226,6 +227,7 @@ However, the added complexity in hyperparameters and the need for careful tuning
        adanorm=False
    )
    ```
+
    *Enable `rectify` to potentially improve convergence while keeping other settings similar to your current setup.*
 
 3. **High Memory Environments (80GB VRAM) - Batch Size 16:**
@@ -244,6 +246,7 @@ However, the added complexity in hyperparameters and the need for careful tuning
        r=0.95
    )
    ```
+
    *Decrease the learning rate due to the larger batch size and enable `ams_bound` and `adanorm` to take full advantage of your hardware capabilities.*
 
 ---
