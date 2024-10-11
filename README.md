@@ -26,6 +26,11 @@ Clone the repo and install **pyrodigy** using [Poetry](https://python-poetry.org
 poetry install
 ```
 
+### Dependencies
+
+**Note:** Pyrodigy requires [PyTorch](https://pytorch.org/get-started/locally/) to be installed separately. You can install it based on your specific environment (CPU or GPU) and operating system. Follow the [PyTorch installation guide](https://pytorch.org/get-started/locally/) for instructions.
+
+
 ## Usage
 ### CLI Commands
 The CLI commands allow you to list optimizers, manage configurations, and handle history entries. 
