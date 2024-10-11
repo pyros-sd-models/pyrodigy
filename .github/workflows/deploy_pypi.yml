@@ -74,6 +74,9 @@ jobs:
           file_pattern: |
             pyproject.toml
             pyrodigy/__init__.py
+            docs/conf.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESSTOKEN }}
 
       - name: Install dependencies
         run: |

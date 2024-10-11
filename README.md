@@ -1,5 +1,6 @@
 [![Documentation Status](https://readthedocs.org/projects/pyrodigy/badge/?version=latest)](https://pyrodigy.readthedocs.io/en/latest/?badge=latest)
-      
+[![Publish Python Package](https://github.com/pyros-sd-models/pyrodigy/actions/workflows/deploy_pypi.yml/badge.svg)](https://github.com/pyros-sd-models/pyrodigy/actions/workflows/deploy_pypi.yml)
+
 # 🔥 pyrodigy 🔥
 
 *ATTENTION - WORK IN PROGRESS - TEST DEPLOYMENT - NOT COMPLETE*
