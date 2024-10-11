@@ -84,6 +84,9 @@ Each time an optimizer is instantiated, an entry is created in its history. You 
   ```
 
 ## Example: Using pyrodigy in Code
+
+### General usage
+
 Instantiate an optimizer with pyrodigy’s `Wrapper`, which logs the creation details to the optimizer's history.
 
 ```python
@@ -97,6 +100,50 @@ lr = 0.001
 
 # Initialize the optimizer
 optimizer = Wrapper(params, optimizer_name=optimizer_name, config_name=config_name, lr=lr)
+```
+
+
+### Implementing into Kohya's training framework
+
+Instantiate an optimizer with pyrodigy’s `Wrapper`, which logs the creation details to the optimizer's history.
+
+```python
+# get optimizer in train_utils.py
+
+if optimizer_type.lower().startswith("Pyro-Wrapper".lower()):
+  try:
+      from pyrodigy import OptimizerWrapper
+
+      # Extract necessary information from optimizer_kwargs
+      optimizer_name = optimizer_kwargs.get("id", "adabelief")
+      optimizer_default_config = optimizer_kwargs.get("cfg", "low_memory")
+
+      # Define optimizer_class using the optimizer name
+      optimizer_class = OptimizerWrapper(optimizer=optimizer_name)
+
+      # Initialize the optimizer using the Wrapper
+      optimizer = optimizer_class(
+          trainable_params,
+          optimizer_name=optimizer_name,
+          config_name=optimizer_default_config,
+          lr=lr,
+          **optimizer_kwargs,
+      )
+
+  except ImportError:
+      raise ImportError(
+          "No pytorch_optimizer"
+      )
+  except Exception as e:
+      logger.error(
+          "An error occurred while loading the optimizer:", exc_info=True
+      )
+      raise RuntimeError(
+          f"Failed to initialize optimizer '{optimizer_name}' with type '{optimizer_type}'. "
+          "Please check the optimizer name, configuration, and installation."
+      ) from e
+
+#....
 ```
 
 ### History Entries
