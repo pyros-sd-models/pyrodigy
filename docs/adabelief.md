@@ -4,7 +4,7 @@
 
 **Overview:**
 
-The optimizer you've presented is an implementation of the **AdaBelief** algorithm, which sounds like the optimizer that wants you to "believe" in your gradients. AdaBelief aims to adapt step sizes by considering the "belief" in the observed gradients—because who doesn't want an optimizer with trust issues? It modifies the way the second moment estimate is calculated compared to Adam, focusing on the difference between the gradient and its exponential moving average (EMA), rather than the gradient itself. This approach helps the optimizer to adapt more rapidly to changes and can lead to better generalization performance. In other words, it's like Adam's skeptical cousin who's always questioning everything.
+The optimizer is an implementation of the **AdaBelief** algorithm, which sounds like the optimizer that wants you to "believe" in your gradients. AdaBelief aims to adapt step sizes by considering the "belief" in the observed gradients—because who doesn't want an optimizer with trust issues? It modifies the way the second moment estimate is calculated compared to Adam, focusing on the difference between the gradient and its exponential moving average (EMA), rather than the gradient itself. This approach helps the optimizer to adapt more rapidly to changes and can lead to better generalization performance. In other words, it's like Adam's skeptical cousin who's always questioning everything.
 
 ---
 
