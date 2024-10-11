@@ -36,7 +36,7 @@ poetry install
 The CLI commands allow you to list optimizers, manage configurations, and handle history entries. 
 
 #### List Available Optimizers
-Displays a list of optimizers with both config and documentation:
+Displays a list of optimizers for which a wrapper exist
 ```bash
 pyrodigy list
 ```
