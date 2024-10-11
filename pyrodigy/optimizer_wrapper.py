@@ -16,6 +16,7 @@ import torch
 from loguru import logger
 from pytorch_optimizer import load_optimizer
 
+from config.config_utils import get_config
 from pyrodigy.cli import record_history
 
 
@@ -117,8 +118,7 @@ class OptimizerWrapper(torch.optim.Optimizer):
             ValueError: If the configuration file is not found or is missing the required configuration.
         """
         try:
-            config_module = importlib.import_module(f"config.{optimizer_name}_config")
-            config = config_module.get_config(config_name)
+            config = get_config(optimizer_name, config_name=config_name)
             logger.debug(f"Configuration loaded: {config}")
             return config
         except ModuleNotFoundError:
@@ -190,9 +190,7 @@ class OptimizerWrapper(torch.optim.Optimizer):
             ``*args`: Positional arguments for the optimizer step.
             ``**kwargs``: Keyword arguments for the optimizer step.
         """
-        logger.debug("Optimizer step started.")
         self.optimizer.step(*args, **kwargs)
-        logger.debug("Optimizer step completed.")
 
     def zero_grad(self, *args, **kwargs):
         """
@@ -202,5 +200,4 @@ class OptimizerWrapper(torch.optim.Optimizer):
             ``*args`: Positional arguments for zeroing gradients.
             ``**kwargs``: Keyword arguments for zeroing gradients.
         """
-        logger.debug("Optimizer gradients zeroed.")
         self.optimizer.zero_grad(*args, **kwargs)
