@@ -87,10 +87,10 @@ Each time an optimizer is instantiated, an entry is created in its history. You 
 
 ### General usage
 
-Instantiate an optimizer with pyrodigy’s `Wrapper`, which logs the creation details to the optimizer's history.
+Instantiate an optimizer with pyrodigy’s `OptimizerWrapper`, which logs the creation details to the optimizer's history.
 
 ```python
-from pyrodigy.wrapper import Wrapper
+from pyrodigy import OptimizerWrapper
 
 # Define model parameters and optimizer configuration
 params = model.parameters()
@@ -99,13 +99,13 @@ config_name = "default"
 lr = 0.001
 
 # Initialize the optimizer
-optimizer = Wrapper(params, optimizer_name=optimizer_name, config_name=config_name, lr=lr)
+optimizer = OptimizerWrapper(params, optimizer_name=optimizer_name, config_name=config_name, lr=lr)
 ```
 
 
-### Implementing into Kohya's training framework
+### Implementing into [Kohya's training framework]([http://bla](https://github.com/kohya-ss/sd-scripts))
 
-Instantiate an optimizer with pyrodigy’s `Wrapper`, which logs the creation details to the optimizer's history.
+Instantiate an optimizer with pyrodigy’s `OptimizerWrapper`, which logs the creation details to the optimizer's history.
 
 ```python
 # get optimizer in train_utils.py
