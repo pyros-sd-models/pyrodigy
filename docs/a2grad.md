@@ -5,6 +5,8 @@
 
 The optimizer is an implementation of the **A2Grad** algorithm, which stands for **Adaptive and Accelerated Gradient** method. It's like the optimizer that's had one too many espressos—aiming to speed up convergence while adapting to the terrain of your loss function. A2Grad combines adaptive learning rates with acceleration techniques, hoping to outpace its competitors in the race to the optimal solution. It's the optimizer equivalent of wearing both running shoes and a jetpack.
 
+Paper: <https://arxiv.org/abs/1810.00553>
+
 ---
 
 **Detailed Explanation:**
