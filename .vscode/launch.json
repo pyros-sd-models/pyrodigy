@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "pyrodigy - List Optimizers",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/pyrodigy/cli.py",
+      "args": ["list"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "pyrodigy - Show Optimizer Documentation",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/pyrodigy/cli.py",
+      "args": ["show", "a2grad"],  // Replace "a2grad" with your optimizer name
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "pyrodigy - View Configuration",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/pyrodigy/cli.py",
+      "args": ["config", "a2grad", "get"],  // Replace "a2grad" with your optimizer name
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "pyrodigy - Show History",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/pyrodigy/cli.py",
+      "args": ["history", "a2grad", "show", "--TTL", "30d"],  // Replace "a2grad" with your optimizer name
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "pyrodigy - Clear History",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/pyrodigy/cli.py",
+      "args": ["history", "a2grad", "clear"],  // Replace "a2grad" with your optimizer name
+      "console": "integratedTerminal"
+    }
+  ]
+}

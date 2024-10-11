@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "pyrodigy"
+version = "0.1.1"
+description = "No more excuses for bad models. >70 Optimizers. All explained. All pre-configured."
+authors = ["Pyro <pyros.sd.models@gmail.com>"]
+license = "Apache-2.0"
+repository = "https://github.com/pyros-sd-models/pyrodigy"
+readme = "README.md"
+
+[tool.poetry.scripts]
+pyrodigy = "pyrodigy.cli:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+# PyTorch must be installed separately to ensure CUDA support, if needed.
+# Users should install PyTorch according to their system configuration.
+loguru = "*"
+rich = "*"
+art = "^6.3"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.9"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I"]
+ignore = ["E203", "E266", "E501"]
+exclude = ["logs/", "data/", "tests/", "docs/"]

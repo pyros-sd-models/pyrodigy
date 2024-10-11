@@ -1,0 +1,79 @@
+# .github/workflows/publish.yml
+
+name: Publish Python Package
+
+on:
+  push:
+    branches:
+      - main  # Replace with your default branch
+    paths:
+      - 'pyproject.toml'
+      - 'README.md'
+      - 'pyrodigy/**'
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          export PATH="$HOME/.local/bin:$PATH"
+
+      - name: Bump version number
+        id: bump_version
+        run: |
+          # Get the current version from pyproject.toml
+          VERSION=$(poetry version -s)
+          echo "Current version: $VERSION"
+
+          # Increment the patch version
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "New version: $NEW_VERSION"
+
+          # Update the version in pyproject.toml using Poetry
+          poetry version $NEW_VERSION
+
+          # Update the version in __init__.py
+          sed -i "s/__version__ = .*/__version__ = '$NEW_VERSION'/" pyrodigy/__init__.py
+
+          echo "::set-output name=new_version::$NEW_VERSION"
+
+      - name: Commit version bump
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: Bump version to ${{ steps.bump_version.outputs.new_version }}"
+          file_pattern: |
+            pyproject.toml
+            pyrodigy/__init__.py
+
+      - name: Install dependencies
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry install --only main
+
+      - name: Build package
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry build
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry publish --username $TWINE_USERNAME --password $TWINE_PASSWORD --no-interaction
