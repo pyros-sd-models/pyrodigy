@@ -37,20 +37,25 @@ jobs:
           # Get the current version from pyproject.toml
           VERSION=$(poetry version -s)
           echo "Current version: $VERSION"
-
+      
           # Increment the patch version
           IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
           PATCH=$((PATCH + 1))
           NEW_VERSION="$MAJOR.$MINOR.$PATCH"
           echo "New version: $NEW_VERSION"
-
+      
           # Update the version in pyproject.toml using Poetry
           poetry version $NEW_VERSION
-
+      
           # Update the version in __init__.py
           sed -i "s/__version__ = .*/__version__ = '$NEW_VERSION'/" pyrodigy/__init__.py
-
+      
+          # Update the version in conf.py
+          sed -i "s/version = .*/version = '$NEW_VERSION'/" docs/conf.py
+          #sed -i "s/release = .*/release = '$NEW_VERSION'/" docs/conf.py
+      
           echo "::set-output name=new_version::$NEW_VERSION"
+
 
       - name: Commit version bump
         uses: stefanzweifel/git-auto-commit-action@v4

@@ -9,7 +9,7 @@ source_suffix = {
     '.md': 'markdown',
 }
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = "furo"
 project = 'pyrodigy'
 author = 'Pyro'
 version = '0.1.3'  # Match this with your package version
