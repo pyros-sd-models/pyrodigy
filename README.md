@@ -146,6 +146,14 @@ if optimizer_type.lower().startswith("Pyro-Wrapper".lower()):
 #....
 ```
 
+Then you need to start Kohya's with these optimizer params
+
+```
+--optimizer_type=pyro-wrapper `
+--optimizer_args "id=adabelief" "cfg=low_memory" `
+--learning_rate 1e-4 `
+```
+
 ### History Entries
 Every time you create an optimizer instance, the following details are saved:
 - **Optimizer Name**: The name of the optimizer.
