@@ -36,7 +36,9 @@ class OptimizerWrapper(torch.optim.Optimizer):
         zero_grad(``*args`, *``**kwargs``): Zeros the optimizer gradients.
     """
 
-    def __init__(self, params, optimizer_name, config_name, lr=0.001, **kwargs):
+    def __init__(
+        self, params, optimizer_name, config_name="consumer", lr=0.001, **kwargs
+    ):
         """
         Initializes the OptimizerWrapper with specified parameters, optimizer, and configuration.
 
