@@ -16,6 +16,7 @@ python = "^3.10"
 # Users should install PyTorch according to their system configuration.
 loguru = "*"
 rich = "*"
+pytorch_optimizer = "*"
 art = "^6.3"
 
 [tool.poetry.group.dev.dependencies]
