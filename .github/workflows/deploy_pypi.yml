@@ -10,6 +10,7 @@ on:
       - 'pyproject.toml'
       - 'README.md'
       - 'pyrodigy/**'
+  workflow_dispatch:
 
 jobs:
   build-and-publish:
