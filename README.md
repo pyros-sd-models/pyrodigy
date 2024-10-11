@@ -1,9 +1,9 @@
+# 🔥 pyrodigy 🔥
+
 [![Documentation Status](https://readthedocs.org/projects/pyrodigy/badge/?version=latest)](https://pyrodigy.readthedocs.io/en/latest/?badge=latest)
 [![Publish Python Package](https://github.com/pyros-sd-models/pyrodigy/actions/workflows/deploy_pypi.yml/badge.svg)](https://github.com/pyros-sd-models/pyrodigy/actions/workflows/deploy_pypi.yml)
 
-# 🔥 pyrodigy 🔥
-
-*ATTENTION - WORK IN PROGRESS - TEST DEPLOYMENT - NOT COMPLETE*
+## *ATTENTION - WORK IN PROGRESS - TEST DEPLOYMENT - NOT COMPLETE*
 
 **pyrodigy** is a Python wrapper around more than 70 optimizers from [pytorch_optimizer](https://github.com/kozistr/pytorch_optimizer), along with some additional custom optimizers. Designed for flexibility, pyrodigy offers easy configuration management, history tracking, and a CLI for convenience.
 
@@ -89,7 +89,7 @@ Manage optimizer configurations using the `config` command with `get`, `set`, `a
 
 Each time an optimizer is instantiated, an entry is created in its history. You can review or clear history and apply a TTL to automatically remove old entries.
 
-- **Show History**: View the history for an optimizer. Specify a TTL to filter entries within a certain timeframe.
+- **Show History**: View the history for an optimizer. Specify a TTL to filter entries within a certain time-frame.
 
   ```bash
   pyrodigy history <optimizer_name> show --TTL 30d
@@ -171,7 +171,7 @@ if optimizer_type.lower().startswith("Pyro-Wrapper".lower()):
 
 Then you need to start Kohya's with these optimizer params:
 
-```
+```bash
 --optimizer_type=pyro-wrapper `
 --optimizer_args "id=adabelief" "cfg=low_memory" `
 --learning_rate 1e-4 `

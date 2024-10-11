@@ -8,5 +8,6 @@ The following optimizers are supported by pyrodigy:
 
    a2grad
    adabelief
+   adabound
 
 Refer to the individual pages for details on each optimizer.
