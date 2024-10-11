@@ -1,6 +1,6 @@
 extensions = [
     "myst_parser",
-    "sphinx_rtd_theme",  # Ensure you have a theme installed
+    "furo",  # Ensure you have a theme installed
     'sphinx.ext.autodoc',
 ]
 
