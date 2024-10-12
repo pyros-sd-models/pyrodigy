@@ -13,10 +13,9 @@ Classes:
 import importlib
 import inspect
 
-import torch
 from loguru import logger
-from pytorch_optimizer import load_optimizer
 
+import torch
 from config.config_utils import get_config
 from pyrodigy.cli import record_history
 
@@ -198,11 +197,11 @@ class OptimizerWrapper(torch.optim.Optimizer):
     def get_optimizer_class_fallback(optimizer_name):
         # Fallback to loading the original optimizer if custom one is not available
         try:
-            optimizer_class = load_optimizer(optimizer=optimizer_name)
+            # optimizer_class = load_optimizer(optimizer=optimizer_name)
             logger.debug(
                 f"Standard optimizer '{optimizer_name}' loaded from pytorch_optimizer."
             )
-            return optimizer_class, False
+            return None, False  # optimizer_class, False
         except ValueError as e:
             logger.error(
                 f"Optimizer '{optimizer_name}' not available in pytorch_optimizer."

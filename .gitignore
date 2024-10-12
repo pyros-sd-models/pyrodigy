@@ -55,6 +55,7 @@ dataset/
 # Translations
 *.mo
 *.pot
+logs/
 
 # Django stuff:
 *.log

@@ -1,10 +1,11 @@
 import math
 
-import torch
 from loguru import logger
 from pytorch_optimizer.base.exception import NoSparseGradientError
 from pytorch_optimizer.base.optimizer import BaseOptimizer
 from pytorch_optimizer.base.types import BETAS, CLOSURE, DEFAULTS, LOSS, PARAMETERS
+
+import torch
 
 
 class adabelief_plus(BaseOptimizer):

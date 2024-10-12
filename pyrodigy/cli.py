@@ -81,7 +81,7 @@ DEFAULT_TTL = timedelta(days=30)
 os.makedirs(HISTORY_DIR, exist_ok=True)
 
 # Setup Loguru
-logger.add("pyrodigy.log", level="DEBUG", rotation="10 MB")
+logger.add("logs/pyrodigy.log", level="DEBUG", rotation="10 MB")
 
 
 def show_version():

@@ -12,12 +12,17 @@ pyrodigy = "pyrodigy.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-# PyTorch must be installed separately to ensure CUDA support, if needed.
-# Users should install PyTorch according to their system configuration.
 loguru = "*"
 rich = "*"
-pytorch_optimizer = "*"
 art = "^6.3"
+torch = [
+    { version = "2.4.0", markers = "platform_system == 'Darwin'", source = "pypi" },
+    { version = "2.4.0", markers = "platform_system == 'Windows'", source = "torch" },
+]
+torchvision = [
+    { version = "0.19.0", markers = "platform_system == 'Darwin'", source = "pypi" },
+    { version = "0.19.0", markers = "platform_system == 'Windows'", source = "torch" },
+]
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.6.9"
@@ -26,11 +31,10 @@ ruff = "^0.6.9"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-
-
-
-
-
+[[tool.poetry.source]]
+name = "torch"
+url = "https://download.pytorch.org/whl/cu124"
+priority = "explicit"
 
 
 [tool.poetry.group.docs.dependencies]
