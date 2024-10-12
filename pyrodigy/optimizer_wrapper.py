@@ -188,13 +188,14 @@ class OptimizerWrapper(torch.optim.Optimizer):
                 logger.debug(
                     f"Class '{custom_optimizer_name}' not found in '{custom_module_path}'."
                 )
+                return OptimizerWrapper.get_optimizer_class_fallback(optimizer_name)
 
         except ImportError as e:
             logger.error(f"Error importing '{custom_module_path}' module: {e}")
-            raise ImportError(
-                f"Failed to load custom optimizer module '{custom_module_path}'."
-            )
+            return OptimizerWrapper.get_optimizer_class_fallback(optimizer_name)
 
+    @staticmethod
+    def get_optimizer_class_fallback(optimizer_name):
         # Fallback to loading the original optimizer if custom one is not available
         try:
             optimizer_class = load_optimizer(optimizer=optimizer_name)
