@@ -78,6 +78,9 @@ class OptimizerWrapper(torch.optim.Optimizer):
             if "lr" in optimizer_class.__init__.__code__.co_varnames
             else config,
         )
+        self._optimizer_state_dict_pre_hooks = (
+            self.optimizer._optimizer_state_dict_pre_hooks
+        )
 
     def _initialize_optimizer(self, optimizer_class, params, lr, config):
         """
@@ -103,6 +106,9 @@ class OptimizerWrapper(torch.optim.Optimizer):
             raise ValueError(
                 f"Error initializing optimizer '{optimizer_class.__name__}' with given parameters."
             ) from e
+
+    def __getattr__(self, name):
+        return getattr(self.optimizer, name)
 
     @staticmethod
     def load_config(optimizer_name, config_name):
