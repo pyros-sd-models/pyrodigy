@@ -11,5 +11,5 @@ source_suffix = {
 html_theme = "furo"
 project = 'pyrodigy'
 author = 'Pyro'
-version = '0.2.6'
+version = '0.2.7'
 release = version
