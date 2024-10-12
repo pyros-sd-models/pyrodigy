@@ -11,6 +11,7 @@ Classes:
 """
 
 import importlib
+import inspect
 
 import torch
 from loguru import logger
@@ -96,7 +97,11 @@ class OptimizerWrapper(torch.optim.Optimizer):
             torch.optim.Optimizer: An instance of the optimizer class.
         """
         try:
-            if "lr" in optimizer_class.__init__.__code__.co_varnames:
+            # Use inspect to get the parameter names of the optimizer's __init__ method
+            optimizer_init_params = inspect.signature(
+                optimizer_class.__init__
+            ).parameters
+            if "lr" in optimizer_init_params:
                 return optimizer_class(params, lr=lr, **config)
             return optimizer_class(params, **config)
         except TypeError as e:
@@ -145,7 +150,8 @@ class OptimizerWrapper(torch.optim.Optimizer):
     @staticmethod
     def get_optimizer_class(optimizer_name):
         """
-        Returns the optimizer class for the given optimizer name using pytorch_optimizer's load_optimizer.
+        Returns the optimizer class for the given optimizer name.
+        If a custom optimizer with the name optimizer_name + '_plus' (lowercase) exists, it will be loaded instead.
 
         Args:
             optimizer_name (str): The name of the optimizer.
@@ -154,12 +160,46 @@ class OptimizerWrapper(torch.optim.Optimizer):
             class: The optimizer class.
 
         Raises:
-            ValueError: If the optimizer is not available in pytorch_optimizer.
+            ValueError: If the optimizer is not available in pytorch_optimizer or custom module.
         """
+        # Convert to lowercase and append '_plus' to form the custom optimizer name
+        custom_optimizer_name = optimizer_name.lower() + "_plus"
+        try:
+            # Import the specific class from the module safe_optimizer.custom_optimizer_name
+            custom_module_path = f"safe_optimizer.{custom_optimizer_name}"
+            custom_module = importlib.import_module(custom_module_path)
+
+            # Retrieve the class from the custom module
+            if hasattr(custom_module, custom_optimizer_name):
+                optimizer_class = getattr(custom_module, custom_optimizer_name)
+                if inspect.isclass(optimizer_class):
+                    logger.debug(
+                        f"Custom optimizer '{custom_optimizer_name}' found and loaded."
+                    )
+                    return optimizer_class
+                else:
+                    logger.error(
+                        f"'{custom_optimizer_name}' found in '{custom_module_path}' is not a class."
+                    )
+                    raise TypeError(
+                        f"'{custom_optimizer_name}' in '{custom_module_path}' must be a class."
+                    )
+            else:
+                logger.debug(
+                    f"Class '{custom_optimizer_name}' not found in '{custom_module_path}'."
+                )
+
+        except ImportError as e:
+            logger.error(f"Error importing '{custom_module_path}' module: {e}")
+            raise ImportError(
+                f"Failed to load custom optimizer module '{custom_module_path}'."
+            )
+
+        # Fallback to loading the original optimizer if custom one is not available
         try:
             optimizer_class = load_optimizer(optimizer=optimizer_name)
             logger.debug(
-                f"Optimizer class '{optimizer_class.__name__}' loaded for '{optimizer_name}'"
+                f"Standard optimizer '{optimizer_name}' loaded from pytorch_optimizer."
             )
             return optimizer_class
         except ValueError as e:
@@ -180,15 +220,15 @@ class OptimizerWrapper(torch.optim.Optimizer):
             lr (float): The learning rate for the optimizer.
             config (dict): Additional configuration parameters.
         """
-        logger.info(f"\n{'=' * 50}")
-        logger.info("🚀 Using PYRO's Optimizer Wrapper")
-        logger.info(f"🔧 Optimizer Name: {optimizer_name}")
-        logger.info(f"⚙️  Configuration: {config_name}")
-        logger.info(
+        print(f"\n{'=' * 50}")
+        print("🚀 Using PYRO's Optimizer Wrapper")
+        print(f"🔧 Optimizer Name: {optimizer_name}")
+        print(f"⚙️  Configuration: {config_name}")
+        print(
             f"💡 Learning Rate: {lr if 'lr' in self.optimizer.__class__.__init__.__code__.co_varnames else 'N/A'}"
         )
-        logger.info(f"🔧 Additional Config Parameters: {config}")
-        logger.info(f"{'=' * 50}\n")
+        print(f"🔧 Additional Config Parameters: {config}")
+        print(f"{'=' * 50}\n")
 
     def step(self, *args, **kwargs):
         """
