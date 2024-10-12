@@ -63,10 +63,10 @@ class OptimizerWrapper(torch.optim.Optimizer):
         if "lr" in config and "lr" not in kwargs:
             config.pop("lr", None)  # Use explicit lr if provided, otherwise remove
 
-        optimizer_class = self.get_optimizer_class(optimizer_name)
+        optimizer_class, is_plus = self.get_optimizer_class(optimizer_name)
         self.optimizer = self._initialize_optimizer(optimizer_class, params, lr, config)
 
-        self.log_optimizer_details(optimizer_name, config_name, lr, config)
+        self.log_optimizer_details(optimizer_name, config_name, lr, config, is_plus)
 
         logger.success(
             f"Optimizer '{optimizer_name}' initialized successfully with config '{config_name}'"
@@ -176,7 +176,7 @@ class OptimizerWrapper(torch.optim.Optimizer):
                     logger.debug(
                         f"Custom optimizer '{custom_optimizer_name}' found and loaded."
                     )
-                    return optimizer_class
+                    return optimizer_class, True
                 else:
                     logger.error(
                         f"'{custom_optimizer_name}' found in '{custom_module_path}' is not a class."
@@ -201,7 +201,7 @@ class OptimizerWrapper(torch.optim.Optimizer):
             logger.debug(
                 f"Standard optimizer '{optimizer_name}' loaded from pytorch_optimizer."
             )
-            return optimizer_class
+            return optimizer_class, False
         except ValueError as e:
             logger.error(
                 f"Optimizer '{optimizer_name}' not available in pytorch_optimizer."
@@ -210,7 +210,7 @@ class OptimizerWrapper(torch.optim.Optimizer):
                 f"Optimizer '{optimizer_name}' not found in pytorch_optimizer."
             ) from e
 
-    def log_optimizer_details(self, optimizer_name, config_name, lr, config):
+    def log_optimizer_details(self, optimizer_name, config_name, lr, config, is_plus):
         """
         Logs detailed information about the optimizer, its configuration, and parameters.
 
@@ -220,9 +220,10 @@ class OptimizerWrapper(torch.optim.Optimizer):
             lr (float): The learning rate for the optimizer.
             config (dict): Additional configuration parameters.
         """
+        temp_name = f"{optimizer_name}+ (safe version)" if is_plus else optimizer_name
         print(f"\n{'=' * 50}")
         print("🚀 Using PYRO's Optimizer Wrapper")
-        print(f"🔧 Optimizer Name: {optimizer_name}")
+        print(f"🔧 Optimizer Name: {temp_name}")
         print(f"⚙️  Configuration: {config_name}")
         print(
             f"💡 Learning Rate: {lr if 'lr' in self.optimizer.__class__.__init__.__code__.co_varnames else 'N/A'}"
