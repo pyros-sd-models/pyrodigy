@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyrodigy"
-version = "0.2.7"
+version = "0.2.8"
 description = "No more excuses for bad models. >70 Optimizers. All explained. All pre-configured."
 authors = ["Pyro <pyros.sd.models@gmail.com>"]
 license = "Apache-2.0"
@@ -25,6 +25,7 @@ ruff = "^0.6.9"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
 
 
 
